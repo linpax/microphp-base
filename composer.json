@@ -1,0 +1,12 @@
+{
+  "name": "linpax/microphp-base",
+  "description": "MicroPHP base",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Oleg Lunegov",
+      "email": "testuser@mail.linpax.org"
+    }
+  ]
+}
