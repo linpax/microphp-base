@@ -43,7 +43,9 @@ class Kernel
     }
     public function terminate($request, $response)
     {
-        //
+        echo $response;
+
+        unset($request, $response);
     }
 
     /**

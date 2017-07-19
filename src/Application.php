@@ -8,15 +8,8 @@
 namespace Micro\Base;
 
 
-abstract class Application
+interface Application
 {
-    /** @var Kernel $kernel */
-    private $kernel;
-
-    public function __construct(Kernel $kernel)
-    {
-        $this->kernel = $kernel;
-    }
-
-    abstract public function handle();
+    public function __construct(Kernel $kernel);
+    public function handle();
 }
