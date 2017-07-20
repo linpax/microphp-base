@@ -17,9 +17,9 @@ class Kernel
     protected $appDir;
 
     /** @var bool $debug Debug-mode flag */
-    private $debug = true;
+    private $debug;
     /** @var string $environment Application environment */
-    private $environment = 'devel';
+    private $environment;
     /** @var float $startTime Time of start framework */
     private $startTime;
 
@@ -44,8 +44,8 @@ class Kernel
     public function terminate($request, $response)
     {
         echo $response;
-
-        unset($request, $response);
+        //unset($request, $response);
+        return $request;
     }
 
     /**
