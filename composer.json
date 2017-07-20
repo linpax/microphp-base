@@ -8,5 +8,10 @@
       "name": "Oleg Lunegov",
       "email": "testuser@mail.linpax.org"
     }
-  ]
+  ],
+  "autoload": {
+    "psr-4": {
+      "Micro\\Base\\": "src/"
+    }
+  }
 }
