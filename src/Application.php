@@ -11,5 +11,5 @@ namespace Micro\Base;
 interface Application
 {
     public function __construct(Kernel $kernel);
-    public function handle();
+    public function handle($request);
 }
