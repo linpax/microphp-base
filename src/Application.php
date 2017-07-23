@@ -16,7 +16,6 @@ abstract class Application
     private $request;
 
 
-    abstract public function getAppDir();
     abstract public function run($request);
 
 
@@ -39,6 +38,6 @@ abstract class Application
 
     public function getConfig()
     {
-        return require $this->getAppDir() . '/etc/index.php';
+        return require $this->kernel->getAppDir() . '/etc/index.php';
     }
 }
