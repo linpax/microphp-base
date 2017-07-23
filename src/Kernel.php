@@ -74,8 +74,17 @@ abstract class Kernel
         }
 
         $this->container = new Container($config);
+        $this->container->addInject('kernel', $this);
 
         $this->loaded = true;
+    }
+
+    /**
+     * @return Container
+     */
+    public function getContainer()
+    {
+        return $this->container;
     }
 
     /**
