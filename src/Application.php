@@ -8,8 +8,37 @@
 namespace Micro\Base;
 
 
-interface Application
+abstract class Application
 {
-    public function __construct(Kernel $kernel);
-    public function handle($request);
+    /** @var Kernel $kernel */
+    private $kernel;
+    /** @var mixed $request */
+    private $request;
+
+
+    abstract public function getAppDir();
+    abstract public function run($request);
+
+
+    final public function __construct(Kernel $kernel)
+    {
+        $this->kernel = $kernel;
+    }
+
+    final public function getRequest()
+    {
+        return $this->request;
+    }
+
+    public function handle($request)
+    {
+        $this->kernel->loader($this->getConfig());
+
+        return $this->run($request);
+    }
+
+    public function getConfig()
+    {
+        return require $this->getAppDir() . '/etc/index.php';
+    }
 }

@@ -8,7 +8,7 @@
 namespace Micro\Base;
 
 
-class Kernel
+abstract class Kernel
 {
     /** @const string VERSION Version framework */
     const VERSION = '2.0';
@@ -22,12 +22,14 @@ class Kernel
     private $environment;
     /** @var float $startTime Time of start framework */
     private $startTime;
+    /** @var Container $container */
+    private $container;
 
     /** @var bool $loaded Micro loaded flag */
     private $loaded;
 
 
-    public function __construct($environment='devel', $debug=true)
+    public function __construct($environment = 'devel', $debug = true)
     {
         $this->environment = (string)$environment;
         $this->debug = (bool)$debug;
@@ -41,6 +43,7 @@ class Kernel
             $this->startTime = microtime(true);
         }
     }
+
     public function terminate($request, $response)
     {
         echo $response;
@@ -64,12 +67,15 @@ class Kernel
         $this->loaded = false;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getConfig()
+    public function loader(array $config)
     {
-        return $this->getAppDir().'/configs/index.php';
+        if ($this->loaded) {
+            return;
+        }
+
+        $this->container = new Container($config);
+
+        $this->loaded = true;
     }
 
     /**

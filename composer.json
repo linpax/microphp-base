@@ -13,5 +13,8 @@
     "psr-4": {
       "Micro\\Base\\": "src/"
     }
+  },
+  "require": {
+    "psr/http-message": "^1.0@dev"
   }
 }
