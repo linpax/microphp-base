@@ -17,6 +17,7 @@ abstract class Application
 
 
     abstract public function run($request);
+    abstract public function exception($error);
 
 
     final public function __construct(Kernel $kernel)
@@ -29,11 +30,20 @@ abstract class Application
         return $this->request;
     }
 
+
     public function handle($request)
     {
         $this->kernel->loader($this->getConfig());
 
-        return $this->run($request);
+        try {
+            return $this->run($request);
+        } catch (\Exception $e) {
+            if ($this->kernel->isDebug()) {
+                throw $e;
+            }
+
+            return $this->exception($e);
+        }
     }
 
     public function getConfig()
