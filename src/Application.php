@@ -20,7 +20,7 @@ abstract class Application
 
     final public function __construct(Kernel $kernel)
     {
-        $this->container = new Container($this->getConfig());
+        $this->container = new Container($this->getConfig($kernel));
         $this->container->addInject('kernel', $kernel);
     }
 
@@ -30,9 +30,12 @@ abstract class Application
     }
 
 
-    protected function getConfig()
+    protected function getConfig(Kernel $kernel = null)
     {
-        return require $this->container->get('kernel')->getAppDir() . '/etc/index.php';
+        /** @var Kernel $kernel */
+        $kernel = $kernel ?: $this->getContainer()->get('kernel');
+
+        return require $kernel->getAppDir() . '/etc/index.php';
     }
 
     public function handle($request)
