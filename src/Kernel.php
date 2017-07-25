@@ -44,13 +44,6 @@ abstract class Kernel
         }
     }
 
-    public function terminate($request, $response)
-    {
-        echo $response;
-        //unset($request, $response);
-        return $request;
-    }
-
     /**
      * Clone kernel
      *
@@ -63,20 +56,6 @@ abstract class Kernel
         if ($this->debug) {
             $this->startTime = microtime(true);
         }
-
-        $this->loaded = false;
-    }
-
-    public function loader(array $config)
-    {
-        if ($this->loaded) {
-            return;
-        }
-
-        $this->container = new Container($config);
-        $this->container->addInject('kernel', $this);
-
-        $this->loaded = true;
     }
 
     /**

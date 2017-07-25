@@ -16,15 +16,20 @@ class Container
     protected $injects = [];
 
 
+    /**
+     * Container constructor.
+     *
+     * @param array $config
+     */
     public function __construct(array $config = [])
     {
         $this->config = $config;
     }
 
-    public function param($name)
-    {
-        return array_key_exists($name, $this->config) ? $this->config[$name] : null;
-    }
+    /**
+     * @param $name
+     * @return mixed|false
+     */
     public function get($name)
     {
         if (!empty($this->config[$name])) {

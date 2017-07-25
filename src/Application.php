@@ -10,44 +10,43 @@ namespace Micro\Base;
 
 abstract class Application
 {
-    /** @var Kernel $kernel */
-    private $kernel;
-    /** @var mixed $request */
-    private $request;
+    /** @var Container $container */
+    private $container;
 
 
-    abstract public function run($request);
-    abstract public function exception($error);
+    abstract protected function run();
+    abstract protected function exception($error);
 
 
     final public function __construct(Kernel $kernel)
     {
-        $this->kernel = $kernel;
+        $this->container = new Container($this->getConfig());
+        $this->container->addInject('kernel', $kernel);
     }
 
-    final public function getRequest()
+    final public function getContainer()
     {
-        return $this->request;
+        return $this->container;
     }
 
+
+    protected function getConfig()
+    {
+        return require $this->container->get('kernel')->getAppDir() . '/etc/index.php';
+    }
 
     public function handle($request)
     {
-        $this->kernel->loader($this->getConfig());
+        $this->container->addInject('request', $request);
 
         try {
-            return $this->run($request);
+            return $this->run();
         } catch (\Exception $e) {
-            if ($this->kernel->isDebug()) {
+            if ($this->container->get('kernel')->isDebug()) {
                 throw $e;
             }
 
             return $this->exception($e);
         }
-    }
-
-    public function getConfig()
-    {
-        return require $this->kernel->getAppDir() . '/etc/index.php';
     }
 }
