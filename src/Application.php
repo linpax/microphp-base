@@ -35,7 +35,7 @@ abstract class Application
         /** @var Kernel $kernel */
         $kernel = $kernel ?: $this->getContainer()->get('kernel');
 
-        return require $kernel->getAppDir() . '/etc/index.php';
+        return require $kernel->getAppDir() . '/../etc/index.php';
     }
 
     public function handle($request)
