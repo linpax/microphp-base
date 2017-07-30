@@ -10,7 +10,7 @@ namespace Micro\Base;
 
 interface Resolver
 {
-    public function getApp();
+    public function getController();
 
-    public function getAction();
+    public function getActionName();
 }

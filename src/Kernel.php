@@ -115,6 +115,9 @@ abstract class Kernel
         return $this->environment;
     }
 
+    /**
+     * @return string
+     */
     public function getLogDir()
     {
         return $this->getAppDir().'/logs';
