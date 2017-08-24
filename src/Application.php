@@ -16,6 +16,7 @@ abstract class Application
 
     abstract protected function run();
     abstract protected function exception($error);
+    abstract public function terminate($response);
 
 
     final public function __construct(Kernel $kernel)
