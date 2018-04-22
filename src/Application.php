@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * @link https://github.com/linpax/microphp-base
  * @copyright Copyright &copy; 2017 Linpax
@@ -7,49 +7,11 @@
 
 namespace Micro\Base;
 
-
-abstract class Application
-{
-    /** @var Container $container */
-    private $container;
+use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\ResponseInterface;
 
 
-    abstract protected function run();
-    abstract protected function exception($error);
-
-
-    final public function __construct(Kernel $kernel)
-    {
-        $this->container = new Container($this->getConfig($kernel));
-        $this->container->addInject('kernel', $kernel);
-    }
-
-    final public function getContainer()
-    {
-        return $this->container;
-    }
-
-
-    protected function getConfig(Kernel $kernel = null)
-    {
-        /** @var Kernel $kernel */
-        $kernel = $kernel ?: $this->getContainer()->get('kernel');
-
-        return require $kernel->getAppDir() . '/../etc/index.php';
-    }
-
-    public function handle($request)
-    {
-        $this->container->addInject('request', $request);
-
-        try {
-            return $this->run();
-        } catch (\Exception $e) {
-            if ($this->container->get('kernel')->isDebug()) {
-                throw $e;
-            }
-
-            return $this->exception($e);
-        }
-    }
+interface Application {
+    public function __construct(Kernel $kernel);
+    public function run(RequestInterface $request) : ResponseInterface;
 }

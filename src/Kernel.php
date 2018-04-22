@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 /**
  * @link https://github.com/linpax/microphp-base
  * @copyright Copyright &copy; 2017 Linpax
@@ -8,13 +8,11 @@
 namespace Micro\Base;
 
 
-abstract class Kernel
+class Kernel
 {
     /** @const string VERSION Version framework */
-    const VERSION = '2.0';
+    const VERSION = '3.0';
 
-    /** @var string $appDir */
-    protected $appDir;
 
     /** @var bool $debug Debug-mode flag */
     private $debug;
@@ -22,34 +20,24 @@ abstract class Kernel
     private $environment;
     /** @var float $startTime Time of start framework */
     private $startTime;
-    /** @var Container $container */
-    private $container;
-
-    /** @var bool $loaded Micro loaded flag */
-    private $loaded;
 
 
-    public function __construct($environment = 'devel', $debug = true)
+    public function __construct(string $environment, bool $debug)
     {
-        $this->environment = (string)$environment;
-        $this->debug = (bool)$debug;
-        $this->loaded = false;
+        $this->environment = $environment;
+        $this->debug = $debug;
 
-        ini_set('display_errors', (integer)$this->debug);
-        ini_set('log_errors', (integer)$this->debug);
+        ini_set('display_errors', (string)(integer)$this->debug);
+        ini_set('log_errors', (string)(integer)$this->debug);
 
         if ($this->debug) {
-            ini_set('error_reporting', -1);
+            ini_set('error_reporting', (string)-1);
             $this->startTime = microtime(true);
         }
     }
 
     /**
-     * Clone kernel
-     *
-     * @access public
-     *
-     * @return void
+     * Clone system
      */
     public function __clone()
     {
@@ -58,68 +46,23 @@ abstract class Kernel
         }
     }
 
-    /**
-     * @return Container
-     */
-    public function getContainer()
-    {
-        return $this->container;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAppDir()
-    {
-        if (!$this->appDir) {
-            $this->appDir = dirname((new \ReflectionObject($this))->getFileName());
-        }
-
-        return $this->appDir;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDebug()
-    {
-        return $this->debug;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isCli()
-    {
-        return PHP_SAPI === 'cli';
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getStartTime()
-    {
-        return $this->startTime;
-    }
-
-    public function getCacheDir()
-    {
-        return $this->getAppDir().'/cache/'.$this->getEnvironment();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getEnvironment()
+    public function getEnvironment() : string
     {
         return $this->environment;
     }
 
-    /**
-     * @return string
-     */
-    public function getLogDir()
+    public function getStartTime() : float
     {
-        return $this->getAppDir().'/logs';
+        return $this->startTime;
+    }
+
+    public function getElapsedTime() : float
+    {
+        return microtime(true) - $this->startTime;
+    }
+
+    public function isDebug() : bool
+    {
+        return $this->debug;
     }
 }

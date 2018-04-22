@@ -1,7 +1,11 @@
 {
   "name": "linpax/microphp-base",
   "description": "MicroPHP base",
-  "minimum-stability": "dev",
+  "version": "3.0.0",
+  "type": "library",
+  "keywords": ["microphp"],
+  "minimum-stability": "stable",
+  "prefer-stable": true,
   "license": "MIT",
   "authors": [
     {
@@ -15,6 +19,6 @@
     }
   },
   "require": {
-    "psr/http-message": "^1.0@dev"
+    "psr/http-message": "^1.0"
   }
 }
