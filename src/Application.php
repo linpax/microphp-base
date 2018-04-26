@@ -7,11 +7,14 @@
 
 namespace Micro\Base;
 
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\ResponseInterface;
 
 
 interface Application {
     public function __construct(Kernel $kernel);
+    public function getContainer() : ContainerInterface;
+    public function getKernel() : Kernel;
     public function run(RequestInterface $request) : ResponseInterface;
 }
