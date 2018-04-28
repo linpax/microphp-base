@@ -14,6 +14,7 @@ use Psr\Http\Message\ResponseInterface;
 
 interface Application {
     public function __construct(Kernel $kernel);
+    public function getConfig() : array;
     public function getContainer() : ContainerInterface;
     public function getKernel() : Kernel;
     public function run(RequestInterface $request) : ResponseInterface;
