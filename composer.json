@@ -1,7 +1,7 @@
 {
   "name": "linpax/microphp-base",
   "description": "MicroPHP base",
-  "version": "3.0.1-stable",
+  "version": "3.0.2-stable",
   "type": "library",
   "keywords": ["microphp"],
   "minimum-stability": "stable",
